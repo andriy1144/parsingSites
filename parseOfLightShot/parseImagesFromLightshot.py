@@ -39,11 +39,13 @@ def get_img(html, number):
         # If we get a link of right picture
         # We will parse page of this picture
         r2 = requests.get(src, headers=HEADERS, params=None)
-
-        # save picture in the folder which we created
-        with open(f'C:\\imageslight\\{number}.png', 'wb') as file:
-            file.write(r2.content)
-            print(f"Image {number}.png has successfully parsed")
+        if r2.status_code == 404:
+            pass
+        else:
+            # save picture in the folder which we created
+            with open(f'C:\\imageslight\\{number}.png', 'wb') as file:
+                file.write(r2.content)
+                print(f"Image {number}.png has successfully parsed")
 
 
 # The main func that starts parsing
@@ -54,8 +56,8 @@ def parse():
     # And this number we need to change to get another picture
 
     # start position
-    b = 430
-    while b < 631:  # finish position
+    b = 440
+    while b < 510:  # finish position
         html = get_page(b)
         if html.status_code == 200:
             get_img(html.text, number=b)
